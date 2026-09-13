@@ -6,6 +6,7 @@ use std::{
 pub mod paths;
 pub mod redact;
 pub mod rel_path;
+pub mod schemars;
 pub mod serde;
 pub mod shell;
 pub use gpui_util::*;
@@ -54,6 +55,27 @@ impl<T: Ord + Clone> RangeExt<T> for RangeInclusive<T> {
 
     fn contains_inclusive(&self, other: &Range<T>) -> bool {
         self.start() <= &other.start && &other.end <= self.end()
+    }
+}
+
+/// Removes characters from the front of the string if its length is greater than `max_chars` and
+/// prepends the string with "...". Returns string unchanged if its length is smaller than max_chars.
+pub fn truncate_and_remove_front(s: &str, max_chars: usize) -> String {
+    debug_assert!(max_chars >= 5);
+
+    // If the string's byte length is <= max_chars, walking the string can be skipped since the
+    // number of chars is <= the number of bytes.
+    if s.len() <= max_chars {
+        return s.to_string();
+    }
+    let suffix_char_length = max_chars.saturating_sub(1);
+    let truncation_ix = s
+        .char_indices()
+        .map(|(i, _)| i)
+        .nth_back(suffix_char_length);
+    match truncation_ix {
+        Some(index) if index > 0 => "…".to_string() + &s[index..],
+        _ => s.to_string(),
     }
 }
 

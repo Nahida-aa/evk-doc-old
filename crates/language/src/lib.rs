@@ -104,6 +104,63 @@ pub enum ClientCommand {
     ScheduleTask(task::TaskTemplate),
 }
 
+/// A shared grammar for plain text, exposed for reuse by downstream crates.
+pub static PLAIN_TEXT: LazyLock<Arc<Language>> = LazyLock::new(|| {
+    Arc::new(Language::new(
+        LanguageConfig {
+            name: "Plain Text".into(),
+            soft_wrap: Some(SoftWrap::EditorWidth),
+            matcher: LanguageMatcher {
+                path_suffixes: vec!["txt".to_owned()],
+                first_line_pattern: None,
+                modeline_aliases: vec!["text".to_owned(), "txt".to_owned()],
+            },
+            brackets: BracketPairConfig {
+                pairs: vec![
+                    BracketPair {
+                        start: "(".to_string(),
+                        end: ")".to_string(),
+                        close: true,
+                        surround: true,
+                        newline: false,
+                    },
+                    BracketPair {
+                        start: "[".to_string(),
+                        end: "]".to_string(),
+                        close: true,
+                        surround: true,
+                        newline: false,
+                    },
+                    BracketPair {
+                        start: "{".to_string(),
+                        end: "}".to_string(),
+                        close: true,
+                        surround: true,
+                        newline: false,
+                    },
+                    BracketPair {
+                        start: "\"".to_string(),
+                        end: "\"".to_string(),
+                        close: true,
+                        surround: true,
+                        newline: false,
+                    },
+                    BracketPair {
+                        start: "'".to_string(),
+                        end: "'".to_string(),
+                        close: true,
+                        surround: true,
+                        newline: false,
+                    },
+                ],
+                disabled_scopes_by_bracket_ix: Default::default(),
+            },
+            ..Default::default()
+        },
+        None,
+    ))
+});
+
 #[async_trait(?Send)]
 pub trait LspAdapter: 'static + Send + Sync + DynLspInstaller {
     fn name(&self) -> LanguageServerName;

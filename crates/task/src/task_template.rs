@@ -8,10 +8,12 @@ use util::schemars::{AllowTrailingCommas, DefaultDenyUnknownFields};
 use util::serde::default_true;
 use util::{ResultExt, truncate_and_remove_front};
 
-use crate::{
-    AttachRequest, ResolvedTask, RevealTarget, Shell, SpawnInTerminal, TaskContext, TaskId,
-    VariableName, ZED_VARIABLE_NAME_PREFIX, serde_helpers::non_empty_string_vec,
-};
+// use crate::{
+//     // AttachRequest, ResolvedTask,
+//     // RevealTarget,
+//     //  Shell, SpawnInTerminal, TaskContext, TaskId,
+//     // VariableName, ZED_VARIABLE_NAME_PREFIX, serde_helpers::non_empty_string_vec,
+// };
 
 /// A template definition of a Zed task to run.
 /// May use the [`VariableName`] to get the corresponding substitutions into its fields.
@@ -47,11 +49,11 @@ pub struct TaskTemplate {
     // * `never` — do not alter focus, but still add/reuse the task's tab in its pane
     #[serde(default)]
     pub reveal: RevealStrategy,
-    /// Where to place the task's terminal item after starting the task.
-    /// * `dock` — in the terminal dock, "regular" terminal items' place (default).
-    /// * `center` — in the central pane group, "main" editor area.
-    #[serde(default)]
-    pub reveal_target: RevealTarget,
+    // /// Where to place the task's terminal item after starting the task.
+    // /// * `dock` — in the terminal dock, "regular" terminal items' place (default).
+    // /// * `center` — in the central pane group, "main" editor area.
+    // #[serde(default)]
+    // pub reveal_target: RevealTarget,
     /// What to do with the terminal pane and tab, after the command had finished:
     /// * `never` — do nothing when the command finishes (default)
     /// * `always` — always hide the terminal tab, hide the pane also if it was the last tab in it
@@ -63,9 +65,9 @@ pub struct TaskTemplate {
     #[serde(default, deserialize_with = "non_empty_string_vec")]
     #[schemars(length(min = 1))]
     pub tags: Vec<String>,
-    /// Which shell to use when spawning the task.
-    #[serde(default)]
-    pub shell: Shell,
+    // /// Which shell to use when spawning the task.
+    // #[serde(default)]
+    // pub shell: Shell,
     /// Whether to show the task line in the task output.
     #[serde(default = "default_true")]
     pub show_summary: bool,

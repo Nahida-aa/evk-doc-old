@@ -7173,6 +7173,7 @@ dependencies = [
  "regex",
  "schemars",
  "serde",
+ "serde_json",
  "shlex",
  "which",
 ]

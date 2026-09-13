@@ -23,8 +23,10 @@ mod task_template;
 //     Request, TcpArgumentsTemplate, ZedDebugConfig,
 // };
 pub use task_template::{
-    substitute_variables_in_map, substitute_variables_in_str, DebugArgsRequest, HideStrategy,
-    RevealStrategy, SaveStrategy, TaskHook, TaskTemplate, TaskTemplates,
+    // substitute_variables_in_map, substitute_variables_in_str, DebugArgsRequest, HideStrategy,
+    // RevealStrategy, SaveStrategy, TaskHook,
+    TaskTemplate,
+    //  TaskTemplates,
 };
 // pub use util::shell::{Shell, ShellKind};
 // pub use util::shell_builder::ShellBuilder;
